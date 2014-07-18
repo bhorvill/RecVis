@@ -166,7 +166,7 @@ public class Window extends JFrame implements ItemListener, ChangeListener, Comp
 		camera.setVisualizer(visualizer);
 		camera.setScrollPane(picturePane);
 		
-		sThickness.setValue(visualizer.getThichness());
+		sThickness.setValue(visualizer.getThickness());
 		sZoom.setValue(visualizer.getZoom());
 		
 		

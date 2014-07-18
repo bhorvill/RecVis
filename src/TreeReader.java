@@ -33,6 +33,10 @@ abstract public class TreeReader {
 		return originations;
 	}
 	
+	public int getNLeaves() {
+		return nLeaves;
+	}
+	
 	public double getScale() {
 		return scale;
 	}

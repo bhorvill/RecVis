@@ -86,6 +86,8 @@ public class Visualizer extends JPanel {
 			}
 			widthGeneLabels*=9;
 			widthSpeciesLabels = 9*computeMaxSpeciesLabelNumberOfLetters(spRoot);
+			
+			widthBranch = standardHeight / 2 / reader.getNLeaves();
 	
 			
 		}
@@ -426,7 +428,7 @@ public class Visualizer extends JPanel {
 		repaint();
 	}
 	
-	public int getThichness() {
+	public int getThickness() {
 		return widthBranch;
 	}
 	
