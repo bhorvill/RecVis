@@ -39,7 +39,7 @@ public class Window extends JFrame implements ItemListener, ChangeListener, Comp
 	 */
 	Visualizer visualizer;
 	Caption caption;
-	JCheckBox bSpeciesTree, bGeneNames, bTaxonNames, bEvents, bLineages;
+	JCheckBox bSpeciesTree, bGeneNames, bTaxonNames, bBranchLengths, bEvents, bLineages;
 	List<JCheckBox> bGeneTrees;
 	JSlider sThickness, sZoom;
 	JScrollPane picturePane, eventsPane;
@@ -63,6 +63,8 @@ public class Window extends JFrame implements ItemListener, ChangeListener, Comp
 		bGeneNames.addItemListener(this);
 		bTaxonNames = new JCheckBox("Show taxon names", true);
 		bTaxonNames.addItemListener(this);
+		bBranchLengths = new JCheckBox("Show branch lengths", false);
+		bBranchLengths.addItemListener(this);
 		bGeneTrees = new ArrayList<JCheckBox>();
 		bEvents = new JCheckBox("Show events", true);
 		bEvents.addItemListener(this);
@@ -146,6 +148,7 @@ public class Window extends JFrame implements ItemListener, ChangeListener, Comp
 		boxPanel.removeAll();
 		boxPanel.add(bSpeciesTree);
 		boxPanel.add(bTaxonNames);
+		boxPanel.add(bBranchLengths);
 		boxPanel.add(bEvents);
 		boxPanel.add(bLineages);
 		boxPanel.add(bGeneNames);
@@ -187,6 +190,9 @@ public class Window extends JFrame implements ItemListener, ChangeListener, Comp
 		}
 		if(arg.getSource()==bEvents) {
 			visualizer.setEventsVisible(bEvents.isSelected());
+		}
+		if(arg.getSource()==bBranchLengths) {
+			visualizer.setBranchLengthsVisible(bBranchLengths.isSelected());
 		}
 		if(arg.getSource()==bLineages) {
 			visualizer.setLineagesVisible(bLineages.isSelected());

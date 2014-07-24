@@ -39,6 +39,7 @@ public class Visualizer extends JPanel {
 	private boolean showSpeciesTree;	//Controlled by the user
 	private boolean showTaxonNames;
 	private boolean showGeneNames;
+	private boolean showBranchLengths;
 	private boolean showEvents;
 	private boolean showLineages;
 	private boolean showSpecBranchSource, showSpecBranchLin, showSpecBranchRecept;
@@ -74,6 +75,7 @@ public class Visualizer extends JPanel {
 			
 			showSpeciesTree = true;
 			showTaxonNames = true;
+			showBranchLengths = false;
 			showGeneNames = true;
 			showEvents = true;
 			showLineages = true;
@@ -170,6 +172,16 @@ public class Visualizer extends JPanel {
 			g.fillRect(getX(node.getTime())-widthBranch/2, y1-heightBranch/2, widthBranch, (y2-y1)+heightBranch);
 		}
 		g.fillRect(getX(timeBegin), y-heightBranch/2, getX(node.getTime())-getX(timeBegin), heightBranch);
+		if(showBranchLengths && node != reader.getOut()) {
+			int n;
+			if(node == reader.getRoot()) {
+				n = (int) (100*(reader.getScale() - node.getTime()));
+			}
+			else {
+				n = (int) (100*(node.getFather().getTime() - node.getTime()));
+			}
+			g.drawString(""+n, (getX(timeBegin)+getX(node.getTime()))/2, y-heightBranch/2-5);
+		}
 		node.setY(y);
 		return y;
 	}
@@ -402,6 +414,11 @@ public class Visualizer extends JPanel {
 	
 	public void setTaxonNamesVisible(boolean val) {
 		showTaxonNames = val;
+		repaint();
+	}
+	
+	public void setBranchLengthsVisible(boolean val) {
+		showBranchLengths = val;
 		repaint();
 	}
 	
