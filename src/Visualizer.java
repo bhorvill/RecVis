@@ -394,7 +394,7 @@ public class Visualizer extends JPanel {
 	
 		
 	public int getX(double time) {
-		return xRoot + (int) ((width-2*xRoot-widthSpeciesLabels)*(1-(double)(time)/scale));
+		return xRoot + (int) ((width-2*xRoot-widthSpeciesLabels-widthGeneLabels)*(1-(double)(time)/scale));
 	}
 	
 	public int getCladeHeight(int nCladeLeaves) {
