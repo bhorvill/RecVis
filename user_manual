@@ -1,0 +1,195 @@
+RecVis user manual (V1.0)
+
+
+I. RecVis
+1. What is RecVis ?
+
+RecVis is a software for species/gene reconciliation visualization. It represents the gene trees inside the species tree, and show each event, such as speciation, duplication, transfer, or loss.
+
+RecVis is developped as a graphic tool for the Ancestrom suite.
+
+RecVis is written in Java; hence you need to have a JRE (Java Running Environment) installed on your computer, to make it work.
+
+2. Reading a reconciliation 
+
+Two format are accepted : the RecVis format, which is proper to the software, and the ALE format, which is the output of ALE software.
+
+To read a RecVis file, open RecVis and then do Menu File > Open RecVis format. Then select your file and press ok.
+Or use the command :  RecVis <RecVis_input_file_name>
+
+To read an ALE file, open RecVis and then do Menu File > Open ALE format. Then select your file and press ok.
+Or use the command : RecVis -ale <ALE_input_file_name>
+If the file is an output of ALE, make sure that the gene/species names equivalence policy is clearly defined in your file. For more information, please report to III.
+
+WARNING : the ALE format does not place events in a precise time, but only in a time slice, ie a minimal interval between two nodes of the species tree. Within each time slice, RecVis reconstructs a precise chronology of events which aims to be consistent, but it is only a choice made by the software. When using the ALE format, you must keep in mind that the events can actually be anywhere within their time slice.
+
+3. Visualizing the reconciliation
+
+The scheme : The species tree is represented in the background of the screen, with a certain thickness, that you can change by using the slider at the top of window, on the left. Below the tree, another branch is added, from a different color : it represents the lineages outside of the tree. It will be used if you observe indirect transfers.
+The genes tree are drawn like black line inside the species tree. Each event is represented by a symbol, whose meaning is given by the caption on the left.
+
+Choosing what you want to visualize : A lot of things can be visualized (species tree, species branch lengths, taxon names, gene lineages, events, gene names), so that the screen can become illegible. You can choose what you want to see by checking or unchecking the boxes at the left. If you have several gene trees, you can also show or hide some of them.
+You can also decide to see only some kind of events, or choose the way you want to see them (for example, for transfers, you can choose to see the event at the source or at the receiver, or see the lineage so that the gene tree remains connex. You can manage these options by going in Menu View > View options.
+
+Zooming : You can use the slider at the top of window, on the right; or you can use the wheel of your mouse. If the scheme becomes too big to hold in the window, you can move in it by pressing the left button of your mouse and then move the cursor (or of course you can use the sliding bars).
+
+Changing the colors : To change the colors, you need to edit the "param" file, which has to be in the same folder than the software. In this file, the first lines represent one color of the scheme, in RGB format. You can change the values of these colors (but be careful to keep the global format : one dash '-' between each value). If you erase this file, default colors will be used.
+
+4. Exporting view
+
+You can export a picture of the scheme, in png format. Select Menu File > Save As Picture (PNG).
+
+5. Technical support
+
+For any questions, suggestions, or bug reportings about RecVis, please contact me at : benjaminhorvilleur@gmail.com
+
+
+
+
+
+
+
+
+II. RecVis format
+
+1. Theory
+The characteristics of the RecVis format are :
+ - it is a serialized format. Every object of the model (species node, gene, event...) is described separately. Each object has an index, which is used to specify the links between the differents objects.
+ - it let you specify a story as much detailed as you want, and the events are spotted with a precise time.
+ - it uses its own system of discretization. 
+
+Each line of the file declares an object, with its index, its characteristics (name, time...), and the indices of the objects it is linked to (the host of a gene, the branch of an event, the sons of an intern node...).
+
+There are two systems of indices : the species node indices, and the gene events indices. These two systems are independant (ie : a same number can be used for both a gene event and a species node). The indices are integers. In the species node system, the branch are denoted by the index of their extremity. The indices have to start from 1, 0 is the index of the unrepresented space.
+
+The trees can be named, the names will be declared in the origination line.
+
+2. Syntax
+The file is divided in  parts, each part is introduced by a line containing a key word.
+
+DISCRETISATION
+The discretisation parameter N. Time is discretized in a regular way such that present (taxa time) is denoted by t = 0. The tree will be be printed until t = N. N has to be higher than the root time; it also has to be higher than the originations time.
+
+NUMBER OF LEAVES
+The number of leaves in the species tree. If the tree is not ultrametric, it also account the leaves at t > 0.
+
+LEAVES
+The leaves. Each leaf has to be declared as follow : 
+<index>:<name>:<time>
+If the leaf correspond to an extant species, then the parameter "time" is 0.
+
+INTERN NODES
+The intern nodes or the species tree (including the root). They have to be declared as follow :
+<index>:<time>:<left_son_index>:<right_son_index>
+
+NUMBER OF GENES
+The number of genes at present (t=0). It is the number of leaves in the gene tree. If there are several gene trees, you have to sum the number of genes.
+
+GENES
+The genes (gene tree leaves). They have to be declared as follow :
+<index>:<name>:<host_id>
+Where the host_id is the index of the species leaf than contains the gene. Note that it does not matter if several genes have the same name (for example, if you have several gene trees), as long as their indices are different.
+
+NUMBER OF EVENTS
+The number of events in the reconciliations, accounting duplications, speciations, transfers, and originations.
+
+EVENTS
+The events in the reconciliations. They have to be declared as follow :
+<index>:<type>:<arg1>:<arg2>:..
+The type is a symbole indicating the nature of the event. The number and the nature of the arguments depends of the type of events. Let us see each one them :
+
+Duplication : Symbol 'D'. 4 arguments : the host id, the time, and the id of the next events on the two lineages.
+Speciation on a species node : Symbol 'S'. 3 arguments : the host id, and the id of the next events on the two lineages
+Speciation on a species node and loss of one of the lineages. Symbol 'SL'. 2 arguments : the host id, and the id of the next event on the surviver lineage.
+Speciation out of the species branch : Symbol 'Sb'. 4 arguments : the host id, the time, the id of the next event on the source lineage, and the id of the next event on the new, unrepresented lineage. Note that if the event occurs on an unrepresented lineage, then the order between the two last arguments does not matter.
+Speciation out of the species branch and loss of the source lineage : Symbol 'SLb'. 3 arguments : the host id, the time, and the id of the next event on the new, unrepresented lineage.
+Transfer back to the tree : Symbol 'TL'. 3 arguments : the time, and the id of the next event on the new lineage.
+Origination : Symbol 'O'. 4 arguments : the name of the tree, the host id, the time, and the id of the next event of the lineage.
+
+Note that events D, Sb and O can happen on unrepresented lineage; in this case, the host id is 0. 
+
+
+
+
+
+
+
+
+
+III. ALE format
+
+1. Theory
+The characteristics of the ALE format are :
+ - it is a parenthesized format. Each tree (species tree and gene trees) is written in a Newick format. The event information is localized in the node labels (the "bootstraps").
+ - it uses the notion of time slice. A time slice is a elementary interval between two nodes of the species tree.
+
+Time slices is indexed by an integer from 0 to N, and sorted from most recent to oldest, ie : the time slice reaching the time of taxa is indexed by 0, and the one beginning at the root time is indexed by N. Then, we defined a last time slice, indexed by N+1, which involve all events occuring before the root time.
+
+The species intern nodes are also indexed, and the indices are defined in the node labels in the species tree Newick line. These indices are integer and usually sorted chronologically from 1 to N, from the same way than time slices, so that, a node has the same time slice than the time slice at its left. Though, this is only true if two species nodes always occur at different times.
+ 
+In ALE format, an event will be localized by the index of its time slice, and the index of the node at the extremity of its branch. Terminal branches are indexed by the name of the taxon at their extremity.
+
+The events accounted by ALE are :
+
+ - Duplications
+ - Speciations at a species tree node
+ - Speciations at a species tree node followed by a loss on one of the daughter branches (hence it is not a gene tree node)
+ - Undirect transfer (which includes the unrepresented speciation, and then the transfer from the unrepresented lineage)
+ - Undirect transfer followed by a loss of the source lineage
+ - Speciation on a unrepresented lineage (multi-transfer)
+
+The origination of the gene is not specified. In RecVis, it is assimilated to the gene tree root event.
+
+2. Global syntax
+
+To be read by RecVis, an ALE file has to have four elements (lines which not correspond to these elements are ignored) :
+
+ - two lines to specify the policy for species/gene equivalency. RecVis needs to know if gene names are the same than taxa's, or if there are prefix, or suffix. These lines begin with the key-words "separator_string:" and "separator number", and respectively followed by the separator (in case gene names are part of species name) and the position of the gene name in the species name. If this number is 1, the gene is supposed to be a prefix, if it is -1, it is supposed to be a suffix. If it is 3, it is supposed to be the word between the second and the third separator. For example :
+
+separator_string:	_
+separator_number:	1
+
+With this example, if "chicken_p53_456B" is a gene name, then the identified host will be "chicken". If the separator number had been 2, the host would have been identified as "p53"; if it had been 3 or -1, the host would have been identified as "456B", etc.
+
+Note that the blank between the key-word and their values is a tabulation.
+
+If these lines are missing, the gene names will supposed to be the same than their hosts.
+
+ - the species tree in its Newick form, whose node labels are supposed to be node indices. It is preceded by the key-word "S:", and then has to be written that way :
+
+S:	(...);
+
+ - the gene trees in a Newick forms (one line per tree), has to be preceded by the key-word "reconciled" followed by the name of the tree. Example with a tree named MyGeneTree:
+
+reconciled MyGeneTree:	(...);
+
+3. Gene node labels
+
+The information on events are found in the node labels in the gene tree Newick lines, instead of the "bootstraps". An event occuring in a branch will be describe in the node label corresponding to its extremity. 
+
+If the branch is terminal, the description of the events will be after the gene name. For example, if a leaf label is "chicken_p53_456B.T@16|3@15|chicken", then "chicken_p53_456B" is the gene name, and ".T@16|3@15|chicken" corresponds to events occuring on the terminal branch.
+
+Each event takes place at one or several points of the species tree. The points are spotted by the syntax "@x|y", where x is the time slice index and y is the branch index. We will call this a point location.
+
+Note that the duplication and speciations without loss corresponds to nodes of the gene tree, and then will always ends an intern branch label. Whereas speciations followed by loss and transfers back occurs during a branch of the gene tree, and then has to be in the middle of the label.
+
+Let's now see the syntax to describe the different kinds of events.
+
+Duplication (node event) : the description begins with the letter D, followed by the duplication location. For example : "D@5|2" describes a duplication at branch 2 during the time slice 5.
+
+Speciations represented in the species tree (node event) : The syntax is ".x", where x is the index of the species node. For example : ".5"
+
+Speciations represented in the species tree, followed by a loss on one of the daughter branch (branch event) : the syntax is the same as bellow. Note that the indicated branch is the mother branch and NOT the surviving branch. Note also that in some version of ALE, speciation/loss events description can be facultative.
+
+Speciations on a species branch (node event) : The syntax is "T" followed by the location of the unrepresented speciation. For example : "T@9|7" describes an unrepresented speciation on branch 7 during time slice 9.
+
+Speciations on a species branch with loss of the source lineage (branch event) : The syntax is ".T" followed by the location of the unrepresented speciation. For example : ".T@16|3".
+
+Transfers back, from an unrepresented lineage (node event): The syntax is "Tb" followed by the location of the transfer. Note that it is an approximation : a speciation followed by a transfer and a loss should be more accurate.
+
+Transfers back, with loss of the unrepresented lineage: there is no key-word, only the location of the transfer. 
+
+The label ".T@16|3@15|chicken", seen above, describes a unrepresented speciation on branch 3 at time slice 16, which leads to the loss of the source lineage, and to a transfer back on the terminal branch of taxon "chicken", during time slice 15.
+
+
+
