@@ -37,11 +37,13 @@ public class ViewDialog extends JDialog implements ActionListener, ItemListener{
 	private JButton bClose;
 	
 	private Visualizer vis;
+	private Caption caption;
 	
 	
 	ViewDialog(Window parent) {
 		
 		vis = parent.getVisualizer();
+		caption = parent.getCaption();
 		pMain = new JPanel();
 		add(pMain);
 		pMain.setLayout(new BoxLayout(pMain, BoxLayout.Y_AXIS));
@@ -199,6 +201,7 @@ public class ViewDialog extends JDialog implements ActionListener, ItemListener{
 			vis.setLossesVisible(bLosses.isSelected());	
 		}
 		
+		caption.repaint();
 		ParamManager.saveParam();
 	}
 	

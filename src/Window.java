@@ -248,6 +248,10 @@ public class Window extends JFrame implements ItemListener, ChangeListener, Comp
 		return visualizer;
 	}
 	
+	public Caption getCaption() {
+		return caption;
+	}
+	
 	
 	
 	
