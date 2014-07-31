@@ -181,30 +181,32 @@ public class Window extends JFrame implements ItemListener, ChangeListener, Comp
 
 	@Override
 	public void itemStateChanged(ItemEvent arg) {
-		if(arg.getSource()==bSpeciesTree) {
-			visualizer.setSpeciesTreeVisible(bSpeciesTree.isSelected());
-			bTaxonNames.setEnabled(bSpeciesTree.isSelected());
-		}
-		if(arg.getSource()==bTaxonNames) {
-			visualizer.setTaxonNamesVisible(bTaxonNames.isSelected());
-		}
-		if(arg.getSource()==bEvents) {
-			visualizer.setEventsVisible(bEvents.isSelected());
-		}
-		if(arg.getSource()==bBranchLengths) {
-			visualizer.setBranchLengthsVisible(bBranchLengths.isSelected());
-		}
-		if(arg.getSource()==bLineages) {
-			visualizer.setLineagesVisible(bLineages.isSelected());
-		}
-		if(arg.getSource()==bGeneNames) {
-			visualizer.setGeneNamesVisible(bGeneNames.isSelected());
-		}
-		for(int i=0; i<bGeneTrees.size(); i++)
-			if(arg.getSource()==bGeneTrees.get(i)) {
-				visualizer.setGeneTreeVisible(i, bGeneTrees.get(i).isSelected());
+		if(!visualizer.isNull()) {
+			if(arg.getSource()==bSpeciesTree) {
+				visualizer.setSpeciesTreeVisible(bSpeciesTree.isSelected());
+				bTaxonNames.setEnabled(bSpeciesTree.isSelected());
 			}
-		validate();
+			if(arg.getSource()==bTaxonNames) {
+				visualizer.setTaxonNamesVisible(bTaxonNames.isSelected());
+			}
+			if(arg.getSource()==bEvents) {
+				visualizer.setEventsVisible(bEvents.isSelected());
+			}
+			if(arg.getSource()==bBranchLengths) {
+				visualizer.setBranchLengthsVisible(bBranchLengths.isSelected());
+			}
+			if(arg.getSource()==bLineages) {
+				visualizer.setLineagesVisible(bLineages.isSelected());
+			}
+			if(arg.getSource()==bGeneNames) {
+				visualizer.setGeneNamesVisible(bGeneNames.isSelected());
+			}
+			for(int i=0; i<bGeneTrees.size(); i++)
+				if(arg.getSource()==bGeneTrees.get(i)) {
+					visualizer.setGeneTreeVisible(i, bGeneTrees.get(i).isSelected());
+				}
+			validate();
+		}
 		
 	}
 
