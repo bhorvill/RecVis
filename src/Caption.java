@@ -89,7 +89,7 @@ public class Caption extends JPanel {
 
 		}
 		
-		if(ParamManager.showSpecBranchRecept) {
+		if(ParamManager.showSpecBranchReceiving) {
 			g.setColor(Color.black);
 			g.drawString("Speciation receiving", 50, y);
 			g.setColor(ParamManager.cSpeciation);
@@ -111,7 +111,7 @@ public class Caption extends JPanel {
 			y+=30;
 		}
 		
-		if(ParamManager.showTransferRecept) {
+		if(ParamManager.showTransferReceiving) {
 			g.setColor(Color.black);
 			g.drawString("Transfer receiving", 50, y);
 			g.setColor(ParamManager.cTransfer);

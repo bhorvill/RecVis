@@ -16,8 +16,8 @@ public class ParamManager {
 	public static Color cSpeciation = Color.orange;
 	public static Color cTransfer = Color.red;
 	
-	public static boolean showSpecBranchSource = true, showSpecBranchLin = true, showSpecBranchRecept = false;
-	public static boolean showTransferSource = true, showTransferLin = true, showTransferRecept = false;
+	public static boolean showSpecBranchSource = true, showSpecBranchLin = true, showSpecBranchReceiving = false;
+	public static boolean showTransferSource = true, showTransferLin = true, showTransferReceiving = false;
 	public static boolean showSpecNode = true, showDuplications = true, showLosses = true;
 	
 	public static void loadParam() {
@@ -55,12 +55,12 @@ public class ParamManager {
 					if(field.equals("SHOWSPECBRANCH")) {
 						showSpecBranchSource = (Integer.parseInt(params[0])==1);
 						showSpecBranchLin = (Integer.parseInt(params[1])==1);
-						showSpecBranchRecept = (Integer.parseInt(params[2])==1);
+						showSpecBranchReceiving = (Integer.parseInt(params[2])==1);
 					}
 					if(field.equals("SHOWTRANSFER")) {
 						showTransferSource = (Integer.parseInt(params[0])==1);
 						showTransferLin = (Integer.parseInt(params[1])==1);
-						showTransferRecept = (Integer.parseInt(params[2])==1);
+						showTransferReceiving = (Integer.parseInt(params[2])==1);
 					}
 					if(field.equals("SHOWOTHER")) {
 						showSpecNode = (Integer.parseInt(params[0])==1);
@@ -92,8 +92,8 @@ public class ParamManager {
 			writer.write("SPECIATION:" + cSpeciation.getRed() + '-' + cSpeciation.getGreen() + '-' + cSpeciation.getBlue() + '\n');
 			writer.write("TRANSFER:" + cTransfer.getRed() + '-' + cTransfer.getGreen() + '-' + cTransfer.getBlue() + '\n');
 			writer.write("\n\n");
-			writer.write("SHOWSPECBRANCH:" + (showSpecBranchSource ? 1 : 0) + "-" + (showSpecBranchLin ? 1 : 0) + "-" + (showSpecBranchRecept ? 1 : 0) + '\n');
-			writer.write("SHOWTRANSFER:" + (showTransferSource ? 1 : 0) + "-" + (showTransferLin ? 1 : 0) + "-" + (showTransferRecept ? 1 : 0) + '\n');
+			writer.write("SHOWSPECBRANCH:" + (showSpecBranchSource ? 1 : 0) + "-" + (showSpecBranchLin ? 1 : 0) + "-" + (showSpecBranchReceiving ? 1 : 0) + '\n');
+			writer.write("SHOWTRANSFER:" + (showTransferSource ? 1 : 0) + "-" + (showTransferLin ? 1 : 0) + "-" + (showTransferReceiving ? 1 : 0) + '\n');
 			writer.write("SHOWOTHER:" + (showSpecNode ? 1 : 0) + "-" + (showDuplications ? 1 : 0) + "-" + (showLosses ? 1 : 0) + '\n');
 
 			writer.close();

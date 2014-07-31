@@ -22,11 +22,11 @@ public class ViewDialog extends JDialog implements ActionListener, ItemListener{
 
 	
 	private JLabel lSpecBranch;
-	private JCheckBox bSpecBranchSource, bSpecBranchLin, bSpecBranchRecept;
+	private JCheckBox bSpecBranchSource, bSpecBranchLin, bSpecBranchReceiving;
 	private JPanel pSpecBranch, pSpecBranchButtons;
 	
 	private JLabel lTransfer;
-	private JCheckBox bTransferSource, bTransferLin, bTransferRecept;
+	private JCheckBox bTransferSource, bTransferLin, bTransferReceiving;
 	private JPanel pTransfer, pTransferButtons;
 	
 	private JLabel lOther;
@@ -70,9 +70,9 @@ public class ViewDialog extends JDialog implements ActionListener, ItemListener{
 		bSpecBranchLin = new JCheckBox("A lineage", vis.getSpecBranchLinVisible());
 		bSpecBranchLin.addItemListener(this);
 		pSpecBranchButtons.add(bSpecBranchLin);
-		bSpecBranchRecept = new JCheckBox("A reception event", vis.getSpecBranchReceptVisible());
-		bSpecBranchRecept.addItemListener(this);
-		pSpecBranchButtons.add(bSpecBranchRecept);
+		bSpecBranchReceiving = new JCheckBox("A receiving event", vis.getSpecBranchReceivingVisible());
+		bSpecBranchReceiving.addItemListener(this);
+		pSpecBranchButtons.add(bSpecBranchReceiving);
 		
 		pMain.add(Box.createRigidArea(new Dimension(1, 20)));
 
@@ -95,9 +95,9 @@ public class ViewDialog extends JDialog implements ActionListener, ItemListener{
 		bTransferLin = new JCheckBox("A lineage", vis.getTransferLinVisible());
 		bTransferLin.addItemListener(this);
 		pTransferButtons.add(bTransferLin);
-		bTransferRecept = new JCheckBox("A reception event", vis.getTransferReceptVisible());
-		bTransferRecept.addItemListener(this);
-		pTransferButtons.add(bTransferRecept);
+		bTransferReceiving = new JCheckBox("A receiving event", vis.getTransferReceivingVisible());
+		bTransferReceiving.addItemListener(this);
+		pTransferButtons.add(bTransferReceiving);
 		
 		
 		pMain.add(Box.createRigidArea(new Dimension(1, 20)));
@@ -170,9 +170,9 @@ public class ViewDialog extends JDialog implements ActionListener, ItemListener{
 			ParamManager.showSpecBranchLin = bSpecBranchLin.isSelected();
 			vis.setSpecBranchLinVisible(bSpecBranchLin.isSelected());		
 		}
-		else if(event.getSource() == bSpecBranchRecept) {
-			ParamManager.showSpecBranchRecept = bSpecBranchRecept.isSelected();
-			vis.setSpecBranchReceptVisible(bSpecBranchRecept.isSelected());	
+		else if(event.getSource() == bSpecBranchReceiving) {
+			ParamManager.showSpecBranchReceiving = bSpecBranchReceiving.isSelected();
+			vis.setSpecBranchReceivingVisible(bSpecBranchReceiving.isSelected());	
 		}
 		
 		else if(event.getSource() == bTransferSource) {
@@ -183,9 +183,9 @@ public class ViewDialog extends JDialog implements ActionListener, ItemListener{
 			vis.setTransferLinVisible(bTransferLin.isSelected());		
 			ParamManager.showTransferLin = bTransferLin.isSelected();
 		}
-		else if(event.getSource() == bTransferRecept) {
-			ParamManager.showTransferRecept = bTransferRecept.isSelected();
-			vis.setTransferReceptVisible(bTransferRecept.isSelected());
+		else if(event.getSource() == bTransferReceiving) {
+			ParamManager.showTransferReceiving = bTransferReceiving.isSelected();
+			vis.setTransferReceivingVisible(bTransferReceiving.isSelected());
 		}
 		
 		else if(event.getSource() == bSpecNode) {

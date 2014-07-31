@@ -42,8 +42,8 @@ public class Visualizer extends JPanel {
 	private boolean showBranchLengths;
 	private boolean showEvents;
 	private boolean showLineages;
-	private boolean showSpecBranchSource, showSpecBranchLin, showSpecBranchRecept;
-	private boolean showTransferSource, showTransferLin, showTransferRecept;
+	private boolean showSpecBranchSource, showSpecBranchLin, showSpecBranchReceiving;
+	private boolean showTransferSource, showTransferLin, showTransferReceiving;
 	private boolean showSpecNode, showDuplications, showLosses;
 	private List<Boolean> showGeneTree;
 	
@@ -95,10 +95,10 @@ public class Visualizer extends JPanel {
 		}
 		showSpecBranchSource = ParamManager.showSpecBranchSource;
 		showSpecBranchLin = ParamManager.showSpecBranchLin;
-		showSpecBranchRecept = ParamManager.showSpecBranchRecept;
+		showSpecBranchReceiving = ParamManager.showSpecBranchReceiving;
 		showTransferSource = ParamManager.showTransferSource;
 		showTransferLin = ParamManager.showTransferLin;
-		showTransferRecept = ParamManager.showTransferRecept;
+		showTransferReceiving = ParamManager.showTransferReceiving;
 		showSpecNode = ParamManager.showSpecNode;
 		showDuplications = ParamManager.showDuplications;
 		showLosses = ParamManager.showLosses;
@@ -270,8 +270,8 @@ public class Visualizer extends JPanel {
 			if(showEvents && showSpecBranchSource) {
 				fillSpeciationSource(g, x2, y);
 			}
-			if(showEvents && showSpecBranchRecept) {
-				fillSpeciationRecept(g, x2, y2);
+			if(showEvents && showSpecBranchReceiving) {
+				fillSpeciationReceiving(g, x2, y2);
 			}
 		}
 		else if(type.equals("SLb")) {
@@ -284,8 +284,8 @@ public class Visualizer extends JPanel {
 			else if (showLosses){
 				drawLoss(g, x2, y);
 			}
-			if(showEvents && showSpecBranchRecept) {
-				fillSpeciationRecept(g, x2, y1);
+			if(showEvents && showSpecBranchReceiving) {
+				fillSpeciationReceiving(g, x2, y1);
 			}
 		}
 		else if(type.equals("Tb")) {
@@ -295,8 +295,8 @@ public class Visualizer extends JPanel {
 			if(showEvents && showTransferSource) {
 				fillTransferSource(g, x2, y);
 			}
-			if(showEvents && showTransferRecept) {
-				fillTransferRecept(g, x2, y2);
+			if(showEvents && showTransferReceiving) {
+				fillTransferReceiving(g, x2, y2);
 			}
 		}
 		else if(type.equals("TLb")) {
@@ -312,8 +312,8 @@ public class Visualizer extends JPanel {
 			else if(showLosses) {
 				drawLoss(g, x2, y);
 			}
-			if(showEvents && showTransferRecept) {
-				fillTransferRecept(g, x2, y1);
+			if(showEvents && showTransferReceiving) {
+				fillTransferReceiving(g, x2, y1);
 			}
 		}
 		else if(type.equals("D")) {
@@ -334,7 +334,7 @@ public class Visualizer extends JPanel {
 		g.fillRect(x-sizeEvent/2, y-sizeEvent/2, sizeEvent, sizeEvent);
 	}
 	
-	public void fillSpeciationRecept(Graphics g, int x, int y) {
+	public void fillSpeciationReceiving(Graphics g, int x, int y) {
 		g.setColor(ParamManager.cSpeciation);
 		int[] xs = new int[] {x-sizeEvent/2, x+sizeEvent, x-sizeEvent/2};
 		int[] ys = new int[] {(int) (y-Math.sqrt(3)*sizeEvent/2), y, (int) (y+Math.sqrt(3)*sizeEvent/2)};
@@ -360,7 +360,7 @@ public class Visualizer extends JPanel {
 		g.fillRect(x-sizeEvent/2, y-sizeEvent/2, sizeEvent, sizeEvent);
 	}
 	
-	public void fillTransferRecept(Graphics g, int x, int y) {
+	public void fillTransferReceiving(Graphics g, int x, int y) {
 		g.setColor(ParamManager.cTransfer);
 		int[] xs = new int[] {x-sizeEvent/2, x+sizeEvent, x-sizeEvent/2};
 		int[] ys = new int[] {(int) (y-Math.sqrt(3)*sizeEvent/2), y, (int) (y+Math.sqrt(3)*sizeEvent/2)};
@@ -467,13 +467,13 @@ public class Visualizer extends JPanel {
 		return showSpecBranchLin;
 	}
 	
-	public void setSpecBranchReceptVisible(boolean specBranchReceptVisible) {
-		this.showSpecBranchRecept = specBranchReceptVisible;
+	public void setSpecBranchReceivingVisible(boolean specBranchReceivingVisible) {
+		this.showSpecBranchReceiving = specBranchReceivingVisible;
 		repaint();
 	}
 	
-	public boolean getSpecBranchReceptVisible() {
-		return showSpecBranchRecept;
+	public boolean getSpecBranchReceivingVisible() {
+		return showSpecBranchReceiving;
 	}
 	
 	public void setTransferSourceVisible(boolean transferSourceVisible) {
@@ -494,13 +494,13 @@ public class Visualizer extends JPanel {
 		return showTransferLin;
 	}
 	
-	public void setTransferReceptVisible(boolean transferReceptVisible) {
-		this.showTransferRecept = transferReceptVisible;
+	public void setTransferReceivingVisible(boolean transferReceivingVisible) {
+		this.showTransferReceiving = transferReceivingVisible;
 		repaint();
 	}
 	
-	public boolean getTransferReceptVisible() {
-		return showTransferRecept;
+	public boolean getTransferReceivingVisible() {
+		return showTransferReceiving;
 	}
 	
 	public void setSpecNodeVisible(boolean specNodeVisible) {
